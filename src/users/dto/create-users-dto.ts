@@ -20,6 +20,11 @@ export class CreateUserDTO {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  password2: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   avatar: string;
 }
 

@@ -7,6 +7,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { UserDTO, CreateUserDTO } from './dto/create-users-dto';
 import { UsersService } from './users.service';
 
 @ApiTags('Users')

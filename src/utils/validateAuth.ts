@@ -6,7 +6,6 @@ interface DataInput {
   email: string;
   password: string;
   password2: string;
-  avatar: string;
 }
 
 interface error {

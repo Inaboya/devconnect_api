@@ -22,7 +22,7 @@ export class UsersService {
         throw new Error(errors as any);
       }
 
-      const { name, email, password, avatar } = payload;
+      const { name, email, password } = payload;
 
       const user = await this.userModel.findOne({ email });
 

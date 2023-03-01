@@ -10,5 +10,11 @@ export class UsersService {
     @InjectModel('User') private readonly userModel: Model<UserInterface>,
   ) {}
 
-  async registerUser(payload: CreateUserDTO) {}
+  async registerUser(payload: CreateUserDTO) {
+    try {
+        
+    } catch (error) {
+        throw error;
+    }
+  }
 }

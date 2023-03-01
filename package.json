@@ -30,7 +30,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.1",
     "@releaf/common": "^1.0.33",
-    "@types/validator": "^13.7.4",
+    "@types/validator": "^13.7.12",
     "africastalking": "^0.5.5",
     "axios": "^0.27.2",
     "class-validator": "^0.13.2",
@@ -42,7 +42,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.3.0",
-    "validator": "^13.7.0",
+    "validator": "^13.9.0",
     "webpack": "^5.72.0"
   },
   "devDependencies": {

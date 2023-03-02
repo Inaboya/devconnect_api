@@ -8,6 +8,11 @@ interface DataInput {
   password2: string;
 }
 
+interface LoginInput {
+  email: string;
+  password: string;
+}
+
 interface error {
   [key: string]: string;
 }
@@ -41,6 +46,27 @@ export const validateRegisterInput = (data: DataInput) => {
 
   if (!Validator.equals(data.password, data.password2)) {
     errors.password2 = 'Passwords must match';
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors),
+  };
+};
+
+export const validateLoginInput = (data: LoginInput) => {
+  const errors: error = {};
+
+  if (Validator.isEmpty(data.email)) {
+    errors.email = 'Email field is required';
+  }
+
+  if (!Validator.isEmail(data.email)) {
+    errors.email = 'Email is invalid';
+  }
+
+  if (Validator.isEmpty(data.password)) {
+    errors.password = 'Password field is required';
   }
 
   return {

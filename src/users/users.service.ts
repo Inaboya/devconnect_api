@@ -4,9 +4,10 @@ import { Model } from 'mongoose';
 import { validateRegisterInput } from 'src/utils/validateAuth';
 import { CreateUserDTO } from './dto/create-users-dto';
 import { UserInterface } from './interface/user-interface';
-import * as normalizeUrl from 'normalize-url';
+// import * as normalizeUrl from 'normalize-url';
 import * as gravatar from 'gravatar';
 import * as bcrypt from 'bcryptjs';
+import { normalizeUrl } from 'src/utils/normalize-url';
 
 @Injectable()
 export class UsersService {
@@ -38,13 +39,13 @@ export class UsersService {
           );
         }
 
-        console.log({ email, gravatar });
-
-        const avatar = gravatar.url(email, {
-          s: '200',
-          r: 'pg',
-          d: 'mm',
-        });
+        const avatar = normalizeUrl(
+          gravatar.url(email, {
+            s: '200',
+            r: 'pg',
+            d: 'mm',
+          }),
+        );
 
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);

@@ -15,10 +15,8 @@ export class UsersService {
   ) {}
 
   async registerUser(payload: CreateUserDTO) {
-    console.log('payload', payload);
     try {
       const errors = validateRegisterInput(payload);
-      console.log(errors, 'errors');
 
       if (errors.isValid === false) {
         throw new HttpException(
@@ -26,13 +24,9 @@ export class UsersService {
           HttpStatus.BAD_REQUEST,
         );
       } else {
-        console.log('testing');
-
         const { name, email, password } = payload;
 
         const user = await this.userModel.findOne({ email });
-
-        console.log(user, 'user');
 
         if (user) {
           throw new HttpException(
@@ -44,7 +38,6 @@ export class UsersService {
           );
         }
 
-
         console.log({ email, gravatar });
 
         const avatar = gravatar.url(email, {
@@ -53,10 +46,8 @@ export class UsersService {
           d: 'mm',
         });
 
-
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
-
 
         const newUser = new this.userModel({
           name,
@@ -65,13 +56,11 @@ export class UsersService {
           avatar,
         });
 
-
         const createdUser = await newUser.save();
 
         return createdUser;
       }
     } catch (error) {
-      console.log(error.message, 'error');
       throw error;
     }
   }

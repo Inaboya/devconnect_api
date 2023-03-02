@@ -28,6 +28,7 @@ export class UsersController {
   })
   @Post()
   async registerUser(@Body() payload: CreateUserDTO) {
+    // console.log(payload, 'payload');
     return await this.userService.registerUser(payload);
   }
 }

@@ -13,6 +13,10 @@ import * as bcrypt from 'bcryptjs';
 import { normalizeUrl } from 'src/utils/normalize-url';
 import { LoginUserDTO } from './dto/login-users-dto';
 import { JwtService } from '@nestjs/jwt';
+// import config from 'config';
+// import { config } from 'dotenv';
+
+console.log(process.env.JWT_SECRET, 'JWT_SECRET');
 
 @Injectable()
 export class UsersService {
@@ -107,13 +111,11 @@ export class UsersService {
           );
         }
 
-        const payload = {
+        const jwtPayload = {
           id: user.id,
         };
 
-        const token = this.jwtService.sign(payload, {
-          expiresIn: '5 days',
-        });
+        const token = this.jwtService.sign(jwtPayload);
 
         return { data: user, token };
       }

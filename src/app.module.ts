@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ProfileModule } from './profile/profile.module';
 
 console.log(process.env.JWT_SECRET, process.env.MONGO_URI);
 
@@ -18,6 +19,7 @@ console.log(process.env.JWT_SECRET, process.env.MONGO_URI);
     JwtModule.register({
       secret: 'process.env.JWT_SECRET',
     }),
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

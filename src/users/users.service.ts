@@ -123,4 +123,26 @@ export class UsersService {
       throw error;
     }
   }
+
+  async getUser(id: string) {
+    try {
+      const user = await this.userModel
+        .findById({ _id: id })
+        .select('-password');
+
+      if (!user) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            error: 'User does not exist',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

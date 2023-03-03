@@ -1,10 +1,12 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -48,5 +50,26 @@ export class UsersController {
   @Post('login')
   async loginUser(@Body() payload: LoginUserDTO) {
     return await this.userService.loginUser(payload);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get user' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'fetch user by id',
+    type: UserDTO,
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'Must be a valid mongodb id',
+  })
+  @Get(':id')
+  async getUser(@Param('id') id: string) {
+    return await this.userService.getUser(id);
   }
 }

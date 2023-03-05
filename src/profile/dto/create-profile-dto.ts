@@ -35,5 +35,5 @@ export class CreateProfileDTO {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  
+  githubusername: string;
 }

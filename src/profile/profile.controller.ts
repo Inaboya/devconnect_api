@@ -6,7 +6,7 @@ import {
   ApiOperation,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { CreatePostDTO, CreateProfileDTO } from './dto/create-profile-dto';
+import { CreateProfileDTO } from './dto/create-profile-dto';
 import { ProfileService } from './profile.service';
 
 @Controller('profile')

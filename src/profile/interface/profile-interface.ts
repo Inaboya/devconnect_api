@@ -37,3 +37,4 @@ export interface ProfileInterface {
     instagram: string;
   };
 }
+

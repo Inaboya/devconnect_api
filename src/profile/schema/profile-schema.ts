@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const Profile = new mongoose.Schema(
+const ProfileSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -109,4 +109,4 @@ const Profile = new mongoose.Schema(
   { timestamps: true },
 );
 
-export const ProfileSchema = mongoose.model('Profile', Profile);
+export const ProfileSchemas = mongoose.model('Profile', ProfileSchema);

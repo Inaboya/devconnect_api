@@ -6,26 +6,27 @@ import {
   ApiOperation,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { CreatePostDTO } from './dto/create-post-dto';
+import { CreatePostDTO } from './dto/create-profile-dto';
+import { ProfileService } from './profile.service';
 
 @Controller('profile')
 export class ProfileController {
-    constructor(private readonly postService: PostService) {}
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create a post' })
-  @ApiCreatedResponse({
-    status: 201,
-    description: 'Post created',
-  })
-  @ApiUnauthorizedResponse({
-    status: 401,
-    description: 'Unauthorized.',
-  })
-  @ApiBadRequestResponse({
-    status: 400,
-    description: 'Bad request',
-  })
-  createPost(@Body() payload: CreatePostDTO, @Req() req) {
-    return this.postService.createPost(payload, req.user);
-  }
+  constructor(private readonly profileService: ProfileService) {}
+  //   @ApiBearerAuth()
+  //   @ApiOperation({ summary: 'Create a post' })
+  //   @ApiCreatedResponse({
+  //     status: 201,
+  //     description: 'Post created',
+  //   })
+  //   @ApiUnauthorizedResponse({
+  //     status: 401,
+  //     description: 'Unauthorized.',
+  //   })
+  //   @ApiBadRequestResponse({
+  //     status: 400,
+  //     description: 'Bad request',
+  //   })
+  //   createProfile(@Body() payload: CreatePostDTO, @Req() req) {
+  //     return this.profileService.createProfile(payload, req.user);
+  //   }
 }

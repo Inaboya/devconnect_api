@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreatePostDTO {
+export class CreateProfileDTO {
   @ApiProperty()
   @IsOptional()
   @IsString()
@@ -35,5 +35,5 @@ export class CreatePostDTO {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  githubusername: string;
+  
 }

@@ -108,4 +108,29 @@ export class ProfileService {
       throw error;
     }
   }
+
+  async getProfile(user: string) {
+    try {
+      const profile = await this.profileModel
+        .findOne({ user })
+        .populate('user', ['name', 'avatar']);
+
+      if (!profile) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            errors: 'Profile not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return {
+        data: profile,
+        message: 'Profile fetched successfully',
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
 }

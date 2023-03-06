@@ -36,4 +36,29 @@ export class CreateProfileDTO {
   @IsOptional()
   @IsString()
   githubusername: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  youtube: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  twitter: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  facebook: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  linkedin: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  instagram: string;
 }

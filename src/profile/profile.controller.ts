@@ -27,6 +27,6 @@ export class ProfileController {
     description: 'Bad request',
   })
   createProfile(@Body() payload: CreateProfileDTO, @Req() req) {
-    return this.profileService.createProfile(payload, req.user);
+    return this.profileService.createProfile(payload, req.user.id);
   }
 }

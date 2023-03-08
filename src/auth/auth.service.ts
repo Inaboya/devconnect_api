@@ -2,10 +2,6 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_SECRET } from 'src/contants';
 
-interface User {
-  id: string;
-}
-
 @Injectable()
 export class AuthGuard {
   constructor(private readonly jwtService: JwtService) {}
@@ -14,7 +10,6 @@ export class AuthGuard {
     try {
       const request = context.switchToHttp().getRequest();
       const token = request.headers.authorization.split(' ')[1];
-      console.log({ token });
       let authStatus: boolean;
 
       if (!token) {
@@ -35,9 +30,6 @@ export class AuthGuard {
       authStatus = true;
       return authStatus;
     } catch (error) {
-      //   return false;
-      console.log(error, 'error');
-      // authStatus = false;
       return false;
     }
   }

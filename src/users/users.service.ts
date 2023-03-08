@@ -13,6 +13,7 @@ import * as bcrypt from 'bcryptjs';
 import { normalizeUrl } from 'src/utils/normalize-url';
 import { LoginUserDTO } from './dto/login-users-dto';
 import { JwtService } from '@nestjs/jwt';
+import { JWT_SECRET } from 'src/contants';
 // import config from 'config';
 // import { config } from 'dotenv';
 
@@ -115,9 +116,14 @@ export class UsersService {
           id: user.id,
         };
 
-        const token = this.jwtService.sign(jwtPayload);
+        const token = this.jwtService.sign(jwtPayload, {
+          secret: JWT_SECRET,
+        });
 
-        return { data: user, token };
+        return {
+          data: user,
+          token,
+        };
       }
     } catch (error) {
       throw error;

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -9,6 +9,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { Request } from 'express';
+import { AuthGuard } from 'src/auth/auth.service';
 import { CustomRequest } from 'src/utils/customRequest';
 import { CreateProfileDTO } from './dto/create-profile-dto';
 import { ProfileService } from './profile.service';
@@ -31,6 +32,7 @@ export class ProfileController {
     status: 400,
     description: 'Bad request',
   })
+  @UseGuards(AuthGuard)
   @Post()
   createProfile(@Body() payload: CreateProfileDTO, @Req() req: CustomRequest) {
     // console.log(req, 'req.user.id');
@@ -51,6 +53,7 @@ export class ProfileController {
     status: 400,
     description: 'Bad request',
   })
+  @UseGuards(AuthGuard)
   @Get('me')
   getProfile(@Req() req: CustomRequest) {
     return this.profileService.getProfile(req.user.id);

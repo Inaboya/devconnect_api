@@ -1,10 +1,19 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -59,5 +68,30 @@ export class ProfileController {
   @Get('me')
   getProfile(@Req() req: CustomRequest) {
     return this.profileService.getProfile(req.user.id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'get user profile by id' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'fetch user profile',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized.',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'must be a valid mongodb id',
+  })
+  @UseGuards(AuthGuard)
+  @Get(':user_id')
+  getProfileById(@Param('user_id') user_id: string) {
+    return this.profileService.getProfile(user_id);
   }
 }

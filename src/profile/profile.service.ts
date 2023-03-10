@@ -31,9 +31,6 @@ export class ProfileService {
   ) {}
 
   async createProfile(payload: CreateProfileDTO, user: string) {
-    console.log(payload, 'what is the payload');
-    // const errors = validateProfileInputs(payload);
-
     const {
       website,
       company,

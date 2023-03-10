@@ -106,6 +106,28 @@ export class ProfileService {
     }
   }
 
+  async getAllProfiles() {
+    try {
+      const profiles = await this.profileModel
+        .find()
+        .populate('user', ['name', 'avatar']);
+
+      if (!profiles) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            errors: 'No profiles found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return { data: profiles, message: 'Profiles fetched successfully' };
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getProfile(user: string) {
     try {
       const profile = await this.profileModel

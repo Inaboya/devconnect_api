@@ -51,6 +51,26 @@ export class ProfileController {
   }
 
   @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get all profiles' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'fetch all profiles',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized.',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @UseGuards(AuthGuard)
+  @Get()
+  getAllProfiles() {
+    return this.profileService.getAllProfiles();
+  }
+
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get user profile' })
   @ApiOkResponse({
     status: 200,

@@ -2,13 +2,13 @@ import Validator from 'validator';
 import { isEmpty } from './is-empty';
 
 interface ProfileInput {
-  company: string;
-  website: string;
-  location: string;
-  status: string;
-  skills: any;
-  bio: string;
-  githubusername: string;
+  company?: string;
+  website?: string;
+  location?: string;
+  status?: string;
+  skills?: any;
+  bio?: string;
+  githubusername?: string;
 }
 
 interface error {

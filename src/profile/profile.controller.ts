@@ -35,6 +35,8 @@ export class ProfileController {
   @UseGuards(AuthGuard)
   @Post()
   createProfile(@Body() payload: CreateProfileDTO, @Req() req: CustomRequest) {
+    console.log({ payload });
+    console.log(req.user.id, 'req.user.id');
     // console.log(req, 'req.user.id');
     return this.profileService.createProfile(payload, req.user.id);
   }

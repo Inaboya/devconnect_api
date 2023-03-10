@@ -31,79 +31,79 @@ export class ProfileService {
   ) {}
 
   async createProfile(payload: CreateProfileDTO, user: string) {
-    const errors = validateProfileInputs(payload);
+    console.log(payload, 'what is the payload');
+    // const errors = validateProfileInputs(payload);
+
+    const {
+      website,
+      company,
+      location,
+      skills,
+      bio,
+      status,
+      twitter,
+      facebook,
+      linkedin,
+      youtube,
+      instagram,
+    } = payload;
 
     try {
-      if (errors.isValid === false) {
+      const profileFields: ProfileFields = {
+        user,
+        website:
+          (website && website !== '') || undefined ? normalizeUrl(website) : '',
+        skills: Array.isArray(skills || undefined)
+          ? skills
+          : skills?.map((skill: string) => ' ' + skill.trim()),
+        company: (company && company !== '') || undefined ? company : '',
+        location: (location && location !== '') || undefined ? location : '',
+        bio: (bio && bio !== '') || undefined ? bio : '',
+        status: (status && status !== '') || undefined ? status : '',
+      };
+
+      const socialFields = {
+        twitter:
+          (twitter && twitter !== '') || undefined ? normalizeUrl(twitter) : '',
+        facebook:
+          (facebook && facebook !== '') || undefined
+            ? normalizeUrl(facebook)
+            : '',
+        linkedin:
+          (linkedin && linkedin !== '') || undefined
+            ? normalizeUrl(linkedin)
+            : '',
+        youtube:
+          (youtube && youtube !== '') || undefined ? normalizeUrl(youtube) : '',
+        instagram:
+          (instagram && instagram !== '') || undefined
+            ? normalizeUrl(instagram)
+            : '',
+      };
+
+      profileFields.social = socialFields;
+
+      const profile = await this.profileModel.findOneAndUpdate(
+        {
+          user,
+        },
+        {
+          $set: profileFields,
+        },
+        { new: true, upsert: true, setDefaultsOnInsert: true },
+      );
+
+      if (!profile) {
         throw new HttpException(
-          { status: HttpStatus.BAD_REQUEST, errors },
+          {
+            status: HttpStatus.BAD_REQUEST,
+            errors: 'Profile not created',
+          },
           HttpStatus.BAD_REQUEST,
         );
-      } else {
-        const {
-          website,
-          company,
-          location,
-          skills,
-          bio,
-          status,
-          twitter,
-          facebook,
-          linkedin,
-          youtube,
-          instagram,
-        } = payload;
-
-        try {
-          const profileFields: ProfileFields = {
-            user,
-            website: website && website !== '' ? normalizeUrl(website) : '',
-            skills: Array.isArray(skills)
-              ? skills
-              : // @ts-ignore
-                skills.split(',').map((skill: string) => ' ' + skill.trim()),
-            company: company && company !== '' ? company : '',
-            location: location && location !== '' ? location : '',
-            bio: bio && bio !== '' ? bio : '',
-            status: status && status !== '' ? status : '',
-          };
-
-          const socialFields = {
-            twitter: twitter && twitter !== '' ? normalizeUrl(twitter) : '',
-            facebook: facebook && facebook !== '' ? normalizeUrl(facebook) : '',
-            linkedin: linkedin && linkedin !== '' ? normalizeUrl(linkedin) : '',
-            youtube: youtube && youtube !== '' ? normalizeUrl(youtube) : '',
-            instagram:
-              instagram && instagram !== '' ? normalizeUrl(instagram) : '',
-          };
-
-          profileFields.social = socialFields;
-
-          const profile = await this.profileModel.findOneAndUpdate(
-            {
-              user,
-            },
-            {
-              $set: profileFields,
-            },
-            { new: true, upsert: true, setDefaultsOnInsert: true },
-          );
-
-          if (!profile) {
-            throw new HttpException(
-              {
-                status: HttpStatus.BAD_REQUEST,
-                errors: 'Profile not created',
-              },
-              HttpStatus.BAD_REQUEST,
-            );
-          }
-
-          return { data: profile, message: 'Profile created successfully' };
-        } catch (error) {
-          throw error;
-        }
       }
+
+      return { data: profile, message: 'Profile created successfully' };
     } catch (error) {
       throw error;
     }

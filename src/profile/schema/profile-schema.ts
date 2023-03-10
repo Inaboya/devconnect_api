@@ -57,10 +57,10 @@ export class Profile {
   @Prop({ type: String })
   githubusername: string;
 
-  @Prop({ type: Array })
+  @Prop({ type: [Object] })
   experience: ExperienceFields[];
 
-  @Prop({ type: Array })
+  @Prop({ type: [Object] })
   education: EducationFields[];
 
   @Prop({ type: Object })

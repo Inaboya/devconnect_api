@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { normalizeUrl } from 'src/utils/normalize-url';
 import { validateProfileInputs } from 'src/utils/validateProfileInputs';
 import { CreateProfileDTO } from './dto/create-profile-dto';
+import { ExperienceDTO } from './dto/experience-dto';
 import { ProfileInterface } from './interface/profile-interface';
 
 interface ProfileFields {
@@ -151,5 +152,9 @@ export class ProfileService {
     } catch (error) {
       throw error;
     }
+  }
+
+  async addExperience(payload: ExperienceDTO, user) {
+    
   }
 }

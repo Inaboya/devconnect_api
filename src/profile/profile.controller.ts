@@ -21,6 +21,7 @@ import { Request } from 'express';
 import { AuthGuard } from 'src/auth/auth.service';
 import { CustomRequest } from 'src/utils/customRequest';
 import { CreateProfileDTO } from './dto/create-profile-dto';
+import { ExperienceDTO } from './dto/experience-dto';
 import { ProfileService } from './profile.service';
 
 @ApiTags('Profile')
@@ -113,5 +114,25 @@ export class ProfileController {
   @Get(':user_id')
   getProfileById(@Param('user_id') user_id: string) {
     return this.profileService.getProfile(user_id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Add experience to profile' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'add experience to user profile',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized.',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @UseGuards(AuthGuard)
+  @Post('experience')
+  addExperience(@Body() payload: ExperienceDTO, @Req() req: CustomRequest) {
+    return this.profileService.addExperience(payload, req.user.id);
   }
 }

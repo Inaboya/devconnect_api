@@ -8,6 +8,8 @@ import { CreateProfileDTO } from './dto/create-profile-dto';
 import { ExperienceDTO } from './dto/experience-dto';
 import { ProfileInterface } from './interface/profile-interface';
 import { v4 as uuid } from 'uuid';
+import { EducationDTO } from './dto/education-dto';
+import { validateEducationInput } from 'src/utils/validateEducation';
 
 interface ProfileFields {
   user: string;
@@ -246,6 +248,72 @@ export class ProfileService {
         data: profile,
         message: 'Experience deleted successfully',
       };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async addEducation(payload: EducationDTO, user: string) {
+    let { from, to } = payload;
+    const { school, degree, fieldofstudy, current, description } = payload;
+
+    if (to && from) {
+      if (new Date(to).getTime() < new Date(from).getTime()) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            errors: 'To date must be after from date',
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+
+    to = new Date(to).toISOString();
+    from = new Date(from).toISOString();
+
+    try {
+      const { errors, isValid } = validateEducationInput(payload);
+
+      if (isValid === false) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            errors,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      } else {
+        const profile = await this.profileModel.findOne({ user });
+
+        if (!profile) {
+          throw new HttpException(
+            {
+              status: HttpStatus.NOT_FOUND,
+              errors: 'User profile not found',
+            },
+            HttpStatus.NOT_FOUND,
+          );
+        }
+
+        profile.education.unshift({
+          id: uuid(),
+          school,
+          degree,
+          fieldofstudy,
+          from,
+          to,
+          current,
+          description,
+        });
+
+        await profile.save();
+
+        return {
+          data: profile,
+          message: 'Education added successfully',
+        };
+      }
     } catch (error) {
       throw error;
     }

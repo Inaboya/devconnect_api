@@ -22,6 +22,7 @@ import { Request } from 'express';
 import { AuthGuard } from 'src/auth/auth.service';
 import { CustomRequest } from 'src/utils/customRequest';
 import { CreateProfileDTO } from './dto/create-profile-dto';
+import { EducationDTO } from './dto/education-dto';
 import { ExperienceDTO } from './dto/experience-dto';
 import { ProfileService } from './profile.service';
 
@@ -173,7 +174,7 @@ export class ProfileController {
   })
   @UseGuards(AuthGuard)
   @Post('education')
-  addEducation(@Body() payload: ExperienceDTO, @Req() req: CustomRequest) {
+  addEducation(@Body() payload: EducationDTO, @Req() req: CustomRequest) {
     return this.profileService.addEducation(payload, req.user.id);
   }
 }

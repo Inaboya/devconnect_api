@@ -25,8 +25,8 @@ export interface ProfileInterface {
       school: string;
       degree: string;
       fieldofstudy: string;
-      from: Date;
-      to: Date;
+      from: string;
+      to: string;
       current: boolean;
       description: string;
     },

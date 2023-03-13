@@ -188,8 +188,6 @@ export class ProfileService {
       } else {
         const profile = await this.profileModel.findOne({ user });
 
-        console.log({ profile });
-
         if (!profile) {
           throw new HttpException(
             {
@@ -209,7 +207,6 @@ export class ProfileService {
           current,
           description,
         });
-
 
         await profile.save();
 

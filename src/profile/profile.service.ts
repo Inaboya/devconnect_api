@@ -272,7 +272,6 @@ export class ProfileService {
     to = new Date(to).toISOString();
     from = new Date(from).toISOString();
 
-
     try {
       const { errors, isValid } = validateEducationInput(payload);
 

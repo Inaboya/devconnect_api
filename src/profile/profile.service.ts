@@ -223,7 +223,6 @@ export class ProfileService {
   }
 
   async deleteExperience(id: string, user: string) {
-    console.log({ id });
     try {
       const profile = await this.profileModel.findOne({ user });
 
@@ -240,8 +239,6 @@ export class ProfileService {
       const deletedValue = profile.experience.filter((exp) => exp.id !== id);
 
       profile.experience = deletedValue as any;
-
-      console.log({ deletedValue });
 
       await profile.save();
 

@@ -6,8 +6,6 @@ import { UserSchema } from './schema/users.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_SECRET } from 'src/contants';
 
-console.log(process.env.JWT_KEY, 'JWT_SECRET');
-
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),

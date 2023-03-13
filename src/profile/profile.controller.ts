@@ -156,4 +156,24 @@ export class ProfileController {
   deleteExperience(@Param('exp_id') exp_id: string, @Req() req: CustomRequest) {
     return this.profileService.deleteExperience(exp_id, req.user.id);
   }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Add education to profile' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'add education to user profile',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized.',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @UseGuards(AuthGuard)
+  @Post('education')
+  addEducation(@Body() payload: ExperienceDTO, @Req() req: CustomRequest) {
+    return this.profileService.addEducation(payload, req.user.id);
+  }
 }

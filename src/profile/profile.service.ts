@@ -155,6 +155,9 @@ export class ProfileService {
   }
 
   async addExperience(payload: ExperienceDTO, user) {
-    
+    try {
+    } catch (error) {
+      throw error;
+    }
   }
 }

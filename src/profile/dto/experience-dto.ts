@@ -29,6 +29,7 @@ export class ExperienceDTO {
   location: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsDate()
   to: Date;
 

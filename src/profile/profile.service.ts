@@ -7,6 +7,7 @@ import { validateProfileInputs } from 'src/utils/validateProfileInputs';
 import { CreateProfileDTO } from './dto/create-profile-dto';
 import { ExperienceDTO } from './dto/experience-dto';
 import { ProfileInterface } from './interface/profile-interface';
+import { v4 as uuid } from 'uuid';
 
 interface ProfileFields {
   user: string;
@@ -199,6 +200,7 @@ export class ProfileService {
         }
 
         profile.experience.unshift({
+          id: uuid(),
           title,
           company,
           location,
@@ -215,6 +217,38 @@ export class ProfileService {
           message: 'Experience added successfully',
         };
       }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteExperience(id: string, user: string) {
+    console.log({ id });
+    try {
+      const profile = await this.profileModel.findOne({ user });
+
+      if (!profile) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            errors: 'User profile not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const deletedValue = profile.experience.filter((exp) => exp.id !== id);
+
+      profile.experience = deletedValue as any;
+
+      console.log({ deletedValue });
+
+      await profile.save();
+
+      return {
+        data: profile,
+        message: 'Experience deleted successfully',
+      };
     } catch (error) {
       throw error;
     }

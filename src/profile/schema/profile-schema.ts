@@ -12,6 +12,7 @@ interface SocialMedia {
 }
 
 interface ExperienceFields {
+  id: string;
   title: string;
   company: string;
   location: string;

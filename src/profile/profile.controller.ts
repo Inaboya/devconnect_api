@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -134,5 +135,25 @@ export class ProfileController {
   @Post('experience')
   addExperience(@Body() payload: ExperienceDTO, @Req() req: CustomRequest) {
     return this.profileService.addExperience(payload, req.user.id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete one experience from profile' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'delete one experience from user profile',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized.',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @UseGuards(AuthGuard)
+  @Delete('experience/:exp_id')
+  deleteExperience(@Param('exp_id') exp_id: string, @Req() req: CustomRequest) {
+    return this.profileService.deleteExperience(exp_id, req.user.id);
   }
 }

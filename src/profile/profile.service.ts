@@ -349,22 +349,22 @@ export class ProfileService {
     }
   }
 
-  async getGithubRepos(username: string) {
-    try {
-      const options = {
-        uri: `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
-        method: 'GET',
-        headers: { 'user-agent': 'node.js' },
-      };
+  // async getGithubRepos(username: string) {
+  //   try {
+  //     const options = {
+  //       uri: `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
+  //       method: 'GET',
+  //       headers: { 'user-agent': 'node.js' },
+  //     };
 
-      const response = await axios.get(options as any);
+  //     const response = await axios.get(options as any);
 
-      return {
-        data: JSON.parse(response.data),
-        message: 'Github repos fetched successfully',
-      };
-    } catch (error) {
-      throw error;
-    }
-  }
+  //     return {
+  //       data: JSON.parse(response.data),
+  //       message: 'Github repos fetched successfully',
+  //     };
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 }

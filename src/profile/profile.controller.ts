@@ -198,21 +198,21 @@ export class ProfileController {
     return this.profileService.deleteEducation(exp_id, req.user.id);
   }
 
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get user github repos' })
-  @ApiOkResponse({
-    status: 200,
-    description: 'fetch user github repos',
-  })
-  @ApiBadRequestResponse({
-    status: 400,
-    description: 'Bad request',
-  })
-  @ApiParam({
-    name: 'username',
-  })
-  @Get('github/:username')
-  getGithubRepos(@Param('username') username: string) {
-    return this.profileService.getGithubRepos(username);
-  }
+  // @ApiBearerAuth()
+  // @ApiOperation({ summary: 'Get user github repos' })
+  // @ApiOkResponse({
+  //   status: 200,
+  //   description: 'fetch user github repos',
+  // })
+  // @ApiBadRequestResponse({
+  //   status: 400,
+  //   description: 'Bad request',
+  // })
+  // @ApiParam({
+  //   name: 'username',
+  // })
+  // @Get('github/:username')
+  // getGithubRepos(@Param('username') username: string) {
+  //   return this.profileService.getGithubRepos(username);
+  // }
 }

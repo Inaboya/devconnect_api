@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
 import { MONGO_URI, JWT_SECRET } from './contants';
+import { PostsModule } from './posts/posts.module';
 
 // console.log(process.env.JWT_SECRET, process.env.MONGO_URI);
 
@@ -23,6 +24,7 @@ import { MONGO_URI, JWT_SECRET } from './contants';
     }),
     ProfileModule,
     AuthModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

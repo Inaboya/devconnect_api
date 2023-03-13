@@ -10,8 +10,6 @@ import { AuthModule } from './auth/auth.module';
 import { MONGO_URI, JWT_SECRET } from './contants';
 import { PostsModule } from './posts/posts.module';
 
-// console.log(process.env.JWT_SECRET, process.env.MONGO_URI);
-
 @Module({
   imports: [
     ConfigModule.forRoot({

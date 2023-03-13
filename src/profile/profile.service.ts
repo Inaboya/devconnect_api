@@ -318,4 +318,33 @@ export class ProfileService {
       throw error;
     }
   }
+
+  async deleteEducation(id: string, user: string) {
+    try {
+      const profile = await this.profileModel.findOne({ user });
+
+      if (!profile) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            errors: 'User profile not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const deletedValue = profile.education.filter((exp) => exp.id !== id);
+
+      profile.education = deletedValue as any;
+
+      await profile.save();
+
+      return {
+        data: profile,
+        message: 'Education deleted successfully',
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
 }

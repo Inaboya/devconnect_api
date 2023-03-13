@@ -177,4 +177,24 @@ export class ProfileController {
   addEducation(@Body() payload: EducationDTO, @Req() req: CustomRequest) {
     return this.profileService.addEducation(payload, req.user.id);
   }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete one education from profile' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'delete one education from user profile',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized.',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @UseGuards(AuthGuard)
+  @Delete('education/:edu_id')
+  deleteEducation(@Param('edu_id') exp_id: string, @Req() req: CustomRequest) {
+    return this.profileService.deleteEducation(exp_id, req.user.id);
+  }
 }

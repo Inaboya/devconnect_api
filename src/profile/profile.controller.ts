@@ -197,4 +197,22 @@ export class ProfileController {
   deleteEducation(@Param('edu_id') exp_id: string, @Req() req: CustomRequest) {
     return this.profileService.deleteEducation(exp_id, req.user.id);
   }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get user github repos' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'fetch user github repos',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @ApiParam({
+    name: 'username',
+  })
+  @Get('github/:username')
+  getGithubRepos(@Param('username') username: string) {
+    return this.profileService.getGithubRepos(username);
+  }
 }

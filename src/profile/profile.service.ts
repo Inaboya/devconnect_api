@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { normalizeUrl } from 'src/utils/normalize-url';
+import { validateExperienceInput } from 'src/utils/validateExperienceInputs';
 import { validateProfileInputs } from 'src/utils/validateProfileInputs';
 import { CreateProfileDTO } from './dto/create-profile-dto';
 import { ExperienceDTO } from './dto/experience-dto';
@@ -155,7 +156,68 @@ export class ProfileService {
   }
 
   async addExperience(payload: ExperienceDTO, user) {
+    let { from, to } = payload;
+    const { title, company, location, current, description } = payload;
+
+    if (to && from) {
+      if (new Date(to).getTime() < new Date(from).getTime()) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            errors: 'To date must be after from date',
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+
+    to = new Date(to).toISOString();
+    from = new Date(from).toISOString();
+
     try {
+      const { errors, isValid } = validateExperienceInput(payload);
+
+      if (isValid === false) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            errors,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      } else {
+        const profile = await this.profileModel.findOne({ user });
+
+        console.log({ profile });
+
+        if (!profile) {
+          throw new HttpException(
+            {
+              status: HttpStatus.NOT_FOUND,
+              errors: 'User profile not found',
+            },
+            HttpStatus.NOT_FOUND,
+          );
+        }
+
+        profile.experience.unshift({
+          title,
+          company,
+          location,
+          from,
+          to,
+          current,
+          description,
+        });
+
+
+        await profile.save();
+
+        return {
+          data: profile,
+          message: 'Experience added successfully',
+        };
+      }
     } catch (error) {
       throw error;
     }

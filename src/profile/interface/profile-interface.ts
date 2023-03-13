@@ -12,8 +12,8 @@ export interface ProfileInterface {
       title: string;
       company: string;
       location: string;
-      from: Date;
-      to: Date;
+      from: string;
+      to: string;
       current: boolean;
       description: string;
     },

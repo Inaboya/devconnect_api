@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
-  IsDate,
   IsDateString,
   IsOptional,
   IsString,
@@ -29,18 +28,19 @@ export class ExperienceDTO {
   location: string;
 
   @ApiProperty()
-  @IsOptional()
-  @IsDate()
-  to: Date;
+  @Type(() => String)
+  @IsString()
+  readonly from: string;
 
   @ApiProperty()
-  @IsDate()
-  from: Date;
+  @Type(() => String)
+  @IsString()
+  readonly to: string;
 
   @ApiProperty()
   @IsOptional()
   @IsBoolean()
-  current: string;
+  current: boolean;
 
   @ApiProperty()
   @IsOptional()

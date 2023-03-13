@@ -10,6 +10,7 @@ import { ProfileInterface } from './interface/profile-interface';
 import { v4 as uuid } from 'uuid';
 import { EducationDTO } from './dto/education-dto';
 import { validateEducationInput } from 'src/utils/validateEducation';
+import axios from 'axios';
 
 interface ProfileFields {
   user: string;
@@ -342,6 +343,25 @@ export class ProfileService {
       return {
         data: profile,
         message: 'Education deleted successfully',
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getGithubRepos(username: string) {
+    try {
+      const options = {
+        uri: `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
+        method: 'GET',
+        headers: { 'user-agent': 'node.js' },
+      };
+
+      const response = await axios.get(options as any);
+
+      return {
+        data: JSON.parse(response.data),
+        message: 'Github repos fetched successfully',
       };
     } catch (error) {
       throw error;

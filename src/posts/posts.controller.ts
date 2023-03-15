@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Query,
   Req,
@@ -13,6 +14,7 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -64,5 +66,26 @@ export class PostsController {
   @Get()
   async getAllPost(@Query() query: FilterPostsParamsDTO) {
     return await this.postService.getAllPosts(query);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get post by id' })
+  @ApiParam({
+    name: 'id',
+    description: 'A valid mongodb id',
+    required: true,
+  })
+  @ApiOkResponse({
+    status: 200,
+    description: 'Get post by id',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @UseGuards(AuthGuard)
+  @Get('/:id')
+  async getPostById(@Param('id') id: string) {
+    return await this.postService.getPostById(id);
   }
 }

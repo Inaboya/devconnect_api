@@ -77,4 +77,24 @@ export class PostsService {
       throw error;
     }
   }
+
+  async getPostById(id: string) {
+    try {
+      const post = await this.postModel.findById({ _id: id });
+
+      if (!post) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            error: 'Post not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return post;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

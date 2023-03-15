@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
 export interface Likes {
@@ -32,3 +32,5 @@ export class Posts {
   @Prop({ type: [Object] })
   comments: Comments[];
 }
+
+export const PostsSchema = SchemaFactory.createForClass(Posts);

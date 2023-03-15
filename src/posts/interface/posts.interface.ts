@@ -1,6 +1,6 @@
 import { Comments, Likes } from '../schema/post-schema';
 
-export interface Posts {
+export interface PostsInterface {
   user: string;
   text: string;
   name: string;

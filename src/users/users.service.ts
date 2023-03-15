@@ -17,8 +17,6 @@ import { JWT_SECRET } from 'src/contants';
 // import config from 'config';
 // import { config } from 'dotenv';
 
-console.log(process.env.JWT_SECRET, 'JWT_SECRET');
-
 @Injectable()
 export class UsersService {
   constructor(

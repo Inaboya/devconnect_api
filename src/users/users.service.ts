@@ -152,7 +152,9 @@ export class UsersService {
 
   async findUserById(id: string) {
     try {
-      const user = await this.userModel.findById({ id }).select('-password');
+      const user = await this.userModel
+        .findById({ _id: id })
+        .select('-password');
 
       if (!user) {
         throw new HttpException(

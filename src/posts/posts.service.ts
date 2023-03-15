@@ -16,8 +16,6 @@ export class PostsService {
   async createPost(payload: CreatePostDTO, user: string) {
     const { text } = payload;
 
-    console.log({ text });
-
     try {
       const { errors, isValid } = validatePost(payload);
 

@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { UsersService } from 'src/users/users.service';
 import { validatePost } from 'src/utils/validatePost';
 import { CreatePostDTO } from './dto/create-post-dto';
+import { FilterPostsParamsDTO } from './dto/filter-post-dto';
 import { PostsInterface } from './interface/posts.interface';
 
 @Injectable()
@@ -41,6 +42,36 @@ export class PostsService {
 
         return newPost;
       }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAllPosts(query: FilterPostsParamsDTO) {
+    let filteredPost;
+
+    const page = Number(query.page) || 1;
+    const limit = Number(query.limit) || 100;
+    const skip = (page - 1) * limit;
+
+    try {
+      filteredPost = await this.postModel
+        .find()
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
+      const totalPosts = await this.postModel.countDocuments();
+
+      const metaData = {
+        data: filteredPost,
+        count: totalPosts,
+        skip,
+        limit,
+        page,
+      };
+
+      return sendPaginatedResponse(metaData);
     } catch (error) {
       throw error;
     }

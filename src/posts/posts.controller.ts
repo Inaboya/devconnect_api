@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -7,6 +7,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.service';
 import { CustomRequest } from 'src/utils/customRequest';
 import { CreatePostDTO } from './dto/create-post-dto';
 import { PostsService } from './posts.service';
@@ -30,6 +31,7 @@ export class PostsController {
     status: 400,
     description: 'Bad Request',
   })
+  @UseGuards(AuthGuard)
   @Post()
   async createPost(
     @Body() createPostDto: CreatePostDTO,

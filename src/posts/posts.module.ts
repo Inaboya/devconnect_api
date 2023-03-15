@@ -6,6 +6,7 @@ import { PostsSchema } from './schema/post-schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_SECRET } from 'src/contants';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { JWT_SECRET } from 'src/contants';
     JwtModule.register({
       secret: JWT_SECRET,
     }),
+    UsersModule,
   ],
   providers: [PostsService],
   controllers: [PostsController],

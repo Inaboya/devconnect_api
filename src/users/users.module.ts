@@ -13,6 +13,7 @@ import { JWT_SECRET } from 'src/contants';
       secret: JWT_SECRET,
     }),
   ],
+  exports: [UsersService],
   providers: [UsersService],
   controllers: [UsersController],
 })

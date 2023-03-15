@@ -1,11 +1,11 @@
 import { Prop, Schema } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
-interface Likes {
+export interface Likes {
   user: mongoose.Schema.Types.ObjectId;
 }
 
-interface Comments {
+export interface Comments {
   user: mongoose.Schema.Types.ObjectId;
   text: string;
   name: string;

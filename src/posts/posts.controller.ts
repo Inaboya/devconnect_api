@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -43,18 +51,18 @@ export class PostsController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get all posts'})
+  @ApiOperation({ summary: 'Get all posts' })
   @ApiOkResponse({
     status: 200,
-    description: 'Get all posts'
+    description: 'Get all posts',
   })
   @ApiUnauthorizedResponse({
     status: 401,
-    description: 'Unauthorized'
+    description: 'Unauthorized',
   })
   @UseGuards(AuthGuard)
   @Get()
   async getAllPost(@Query() query: FilterPostsParamsDTO) {
-    return await this.postService.getAllPosts(query)
+    return await this.postService.getAllPosts(query);
   }
 }

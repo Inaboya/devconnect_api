@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsersService } from 'src/users/users.service';
+import { sendPaginatedResponse } from 'src/utils/paginate';
 import { validatePost } from 'src/utils/validatePost';
 import { CreatePostDTO } from './dto/create-post-dto';
 import { FilterPostsParamsDTO } from './dto/filter-post-dto';

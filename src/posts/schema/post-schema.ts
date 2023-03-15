@@ -10,7 +10,6 @@ export interface Comments {
   text: string;
   name: string;
   avatar: string;
-  date: Date;
 }
 
 @Schema({ timestamps: true })

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -87,5 +88,26 @@ export class PostsController {
   @Get('/:id')
   async getPostById(@Param('id') id: string) {
     return await this.postService.getPostById(id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete post by id' })
+  @ApiParam({
+    name: 'id',
+    description: 'A valid mongodb id',
+    required: true,
+  })
+  @ApiOkResponse({
+    status: 200,
+    description: 'Delete post by id',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @UseGuards(AuthGuard)
+  @Delete('/:id')
+  async deletePostById(@Param('id') id: string, @Req() req: CustomRequest) {
+    return await this.postService.deletePostById(id, req.user.id);
   }
 }

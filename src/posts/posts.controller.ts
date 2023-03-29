@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseGuards,
@@ -109,5 +110,26 @@ export class PostsController {
   @Delete('/:id')
   async deletePostById(@Param('id') id: string, @Req() req: CustomRequest) {
     return await this.postService.deletePostById(id, req.user.id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Like a post' })
+  @ApiParam({
+    name: 'id',
+    description: 'A valid mongodb id',
+    required: true,
+  })
+  @ApiOkResponse({
+    status: 200,
+    description: 'Like a post',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @UseGuards(AuthGuard)
+  @Put('/like/:id')
+  async likePost(@Param('id') id: string, @Req() req: CustomRequest) {
+    return await this.postService.likePost(id, req.user.id);
   }
 }

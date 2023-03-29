@@ -133,4 +133,25 @@ export class PostsController {
   async likePost(@Param('id') id: string, @Req() req: CustomRequest) {
     return await this.postService.likePost(id, req.user.id);
   }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Unlike a post' })
+  @ApiParam({
+    name: 'id',
+    description: 'A valid mongodb id',
+    required: true,
+  })
+  @ApiOkResponse({
+    status: 200,
+    description: 'Unlike a post',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @UseGuards(AuthGuard)
+  @Put('/unlike/:id')
+  async unlikePost(@Param('id') id: string, @Req() req: CustomRequest) {
+    return await this.postService.unlikePost(id, req.user.id);
+  }
 }

@@ -34,7 +34,7 @@ interface EducationFields {
 
 @Schema({ timestamps: true })
 export class Profile {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'User' })
   user: string;
 
   @Prop({ type: String })

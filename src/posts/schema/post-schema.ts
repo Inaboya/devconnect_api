@@ -2,20 +2,20 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
 export interface Likes {
-  user: mongoose.Schema.Types.ObjectId;
+  user: string;
 }
 
 export interface Comments {
-  user: mongoose.Schema.Types.ObjectId;
+  user: mongoose.Types.ObjectId;
   text: string;
   name: string;
   avatar: string;
 }
 
-@Schema({ timestamps: true })
+({ timestamps: true });
 export class Posts {
-  @Prop({ type: mongoose.Schema.Types.ObjectId })
-  user: string;
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'User' })
+  user: mongoose.Types.ObjectId;
 
   @Prop({ type: String })
   text: string;

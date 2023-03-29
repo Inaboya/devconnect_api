@@ -20,6 +20,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import mongoose from 'mongoose';
 import { AuthGuard } from 'src/auth/auth.service';
 import { CustomRequest } from 'src/utils/customRequest';
 import { CreatePostDTO } from './dto/create-post-dto';
@@ -130,6 +131,7 @@ export class PostsController {
   @UseGuards(AuthGuard)
   @Put('/like/:id')
   async likePost(@Param('id') id: string, @Req() req: CustomRequest) {
+    const user = new mongoose.Types.ObjectId(req.user.id);
     return await this.postService.likePost(id, req.user.id);
   }
 }

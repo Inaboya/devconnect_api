@@ -129,4 +129,36 @@ export class PostsService {
       throw error;
     }
   }
+
+  async likePost(id: string, user: string) {
+    try {
+      const post = await this.postModel.findById({ _id: id });
+
+      if (!post) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            error: 'Post not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      if (post.likes.some((like) => like.user.toString() === user)) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: 'Post already liked',
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      post.likes.unshift({ user });
+
+      await post.save();
+    } catch (error) {
+      throw error;
+    }
+  }
 }

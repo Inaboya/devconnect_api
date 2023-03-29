@@ -157,6 +157,8 @@ export class PostsService {
       post.likes.unshift({ user });
 
       await post.save();
+
+      return post;
     } catch (error) {
       throw error;
     }

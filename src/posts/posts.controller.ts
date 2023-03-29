@@ -131,7 +131,6 @@ export class PostsController {
   @UseGuards(AuthGuard)
   @Put('/like/:id')
   async likePost(@Param('id') id: string, @Req() req: CustomRequest) {
-    const user = new mongoose.Types.ObjectId(req.user.id);
     return await this.postService.likePost(id, req.user.id);
   }
 }

@@ -23,6 +23,7 @@ import {
 import mongoose from 'mongoose';
 import { AuthGuard } from 'src/auth/auth.service';
 import { CustomRequest } from 'src/utils/customRequest';
+import { CreateCommentDTO } from './dto/create-comment';
 import { CreatePostDTO } from './dto/create-post-dto';
 import { FilterPostsParamsDTO } from './dto/filter-post-dto';
 import { PostsService } from './posts.service';
@@ -153,5 +154,30 @@ export class PostsController {
   @Put('/unlike/:id')
   async unlikePost(@Param('id') id: string, @Req() req: CustomRequest) {
     return await this.postService.unlikePost(id, req.user.id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Comment a post' })
+  @ApiParam({
+    name: 'id',
+    description: 'A valid mongodb id',
+    required: true,
+  })
+  @ApiOkResponse({
+    status: 200,
+    description: 'Comment a post',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @UseGuards(AuthGuard)
+  @Post('/comment/:id')
+  async commentPost(
+    @Param('id') id: string,
+    @Req() req: CustomRequest,
+    @Body() payload: CreatePostDTO,
+  ) {
+    return await this.postService.commentPost(id, req.user.id, payload);
   }
 }

@@ -6,6 +6,7 @@ export interface Likes {
 }
 
 export interface Comments {
+  id: string;
   user: string;
   text: string;
   name: string;

@@ -7,6 +7,8 @@ import { validatePost } from 'src/utils/validatePost';
 import { CreatePostDTO } from './dto/create-post-dto';
 import { FilterPostsParamsDTO } from './dto/filter-post-dto';
 import { PostsInterface } from './interface/posts.interface';
+import { v4 as uuid } from 'uuid';
+import { CreateCommentDTO } from './dto/create-comment';
 
 @Injectable()
 export class PostsService {
@@ -189,6 +191,50 @@ export class PostsService {
       }
 
       post.likes = post.likes.filter((post) => post.user.toString() !== user);
+
+      await post.save();
+
+      return post;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async commentPost(id: string, user_id: string, payload: CreatePostDTO) {
+    try {
+      const { errors, isValid } = validatePost(payload);
+
+      if (isValid === false) {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: errors,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      const user = await this.userService.findUserById(user_id);
+      const post = await this.postModel.findById({ _id: id });
+
+      if (!post) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            error: 'Post not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const newComment = {
+        id: uuid(),
+        text: payload.text,
+        name: user.name,
+        avatar: user.avatar,
+        user: user_id,
+      };
+
+      post.comments.unshift(newComment);
 
       await post.save();
 

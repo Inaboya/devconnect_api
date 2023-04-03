@@ -180,4 +180,29 @@ export class PostsController {
   ) {
     return await this.postService.commentPost(id, req.user.id, payload);
   }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete a comment' })
+  @ApiParam({
+    name: 'id',
+    description: 'A valid id',
+    required: true,
+  })
+  @ApiOkResponse({
+    status: 200,
+    description: 'Delete a comment',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @UseGuards(AuthGuard)
+  @Delete('/comment/:id/:commentId')
+  async deleteComment(
+    @Param('id') id: string,
+    @Param('commentId') commentId: string,
+    @Req() req: CustomRequest,
+  ) {
+    return await this.postService.deleteComment(id, commentId, req.user.id);
+  }
 }

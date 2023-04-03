@@ -243,4 +243,53 @@ export class PostsService {
       throw error;
     }
   }
+
+  async deleteComment(id: string, commentId: string, user: string) {
+    try {
+      const post = await this.postModel.findById({ _id: id });
+
+      if (!post) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            error: 'Post not found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      const comment = post.comments.find((comment) => comment.id === commentId);
+
+      if (!comment) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            error: 'Comment does not exist',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      if (comment.user.toString() !== user) {
+        throw new HttpException(
+          {
+            status: HttpStatus.UNAUTHORIZED,
+            error:
+              "User not authorized. You cannot delete another person's comment",
+          },
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
+
+      post.comments = post.comments.filter(
+        (comment) => comment.id !== commentId,
+      );
+
+      await post.save();
+
+      return { message: 'Comment deleted', post };
+    } catch (error) {
+      throw error;
+    }
+  }
 }

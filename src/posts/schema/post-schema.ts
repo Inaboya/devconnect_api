@@ -6,13 +6,13 @@ export interface Likes {
 }
 
 export interface Comments {
-  user: mongoose.Types.ObjectId;
+  user: string;
   text: string;
   name: string;
   avatar: string;
 }
 
-({ timestamps: true });
+@Schema({ timestamps: true })
 export class Posts {
   @Prop({ type: mongoose.Types.ObjectId, ref: 'User' })
   user: mongoose.Types.ObjectId;

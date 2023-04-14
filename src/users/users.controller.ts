@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -10,6 +10,8 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.service';
+import { CustomRequest } from 'src/utils/customRequest';
 import { UserDTO, CreateUserDTO } from './dto/create-users-dto';
 import { LoginUserDTO } from './dto/login-users-dto';
 import { UsersService } from './users.service';
@@ -18,6 +20,25 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Load user' })
+  @ApiOkResponse({
+    status: 200,
+    description: 'load user by token',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @ApiUnauthorizedResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @UseGuards(AuthGuard)
+  @Get()
+  async loadUser(@Req() req: CustomRequest) {
+    return await this.userService.getUser(req.user.id);
+  }
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create user' })

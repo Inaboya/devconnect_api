@@ -129,6 +129,7 @@ export class UsersService {
   }
 
   async getUser(id: string) {
+    console.log({ id });
     try {
       const user = await this.userModel
         .findById({ _id: id })

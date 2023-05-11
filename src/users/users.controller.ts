@@ -34,7 +34,7 @@ export class UsersController {
     status: 401,
     description: 'Unauthorized',
   })
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Get()
   async loadUser(@Req() req: CustomRequest) {
     return await this.userService.getUser(req.user.id);

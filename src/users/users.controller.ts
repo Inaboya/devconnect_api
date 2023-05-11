@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -34,8 +42,8 @@ export class UsersController {
     status: 401,
     description: 'Unauthorized',
   })
-  // @UseGuards(AuthGuard)
-  @Get()
+  @UseGuards(AuthGuard)
+  @Get('load-user')
   async loadUser(@Req() req: CustomRequest) {
     return await this.userService.getUser(req.user.id);
   }

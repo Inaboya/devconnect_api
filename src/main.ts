@@ -20,8 +20,6 @@ async function bootstrap() {
     .addTag('devconnect')
     .build();
 
-  // console.log(PORT, 'wetin be this');
-
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('api', app, document);

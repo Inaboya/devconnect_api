@@ -144,7 +144,7 @@ export class ProfileService {
         throw new HttpException(
           {
             status: HttpStatus.NOT_FOUND,
-            errors: 'Profile not found',
+            errors: `User doesn't have a profile yet`,
           },
           HttpStatus.NOT_FOUND,
         );

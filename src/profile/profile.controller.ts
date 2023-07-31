@@ -90,6 +90,7 @@ export class ProfileController {
   @UseGuards(AuthGuard)
   @Get('me')
   getProfile(@Req() req: CustomRequest) {
+    console.log(req.user.id, 'req.user.id');
     return this.profileService.getProfile(req.user.id);
   }
 
@@ -197,6 +198,8 @@ export class ProfileController {
   deleteEducation(@Param('edu_id') exp_id: string, @Req() req: CustomRequest) {
     return this.profileService.deleteEducation(exp_id, req.user.id);
   }
+
+
 
   // @ApiBearerAuth()
   // @ApiOperation({ summary: 'Get user github repos' })

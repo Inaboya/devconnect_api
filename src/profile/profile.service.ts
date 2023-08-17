@@ -106,7 +106,7 @@ export class ProfileService {
         );
       }
 
-      return { data: profile, message: 'Profile created successfully' };
+      return { data: profile, message: 'Profile updated successfully' };
     } catch (error) {
       throw error;
     }
